@@ -1,0 +1,252 @@
+<form [formGroup]="registerFrom" (ngSubmit)="registerSubmit()" class="compact-horizontal-form">
+    <div class="row">
+        <div class="col text-center">
+            <span class="fs-3">Patient Registration</span>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="firstName">First Name</label>
+            <input type="text" class="form-control" id="firstName" placeholder="Enter first name"
+                formControlName="firstName">
+
+            <div class="form-text text-danger"
+                *ngIf="FirstName.errors?.['required'] && (FirstName.touched  || FirstName.dirty)">
+                First Name must be present
+            </div>
+
+            <div class="form-text text-danger"
+                *ngIf="FirstName.errors?.['minlength']  && (FirstName.touched  || FirstName.dirty)">
+                Invalid Name
+            </div>
+
+            <div class="form-text text-danger"
+                *ngIf="FirstName.errors?.['pattern']  && (FirstName.touched  || FirstName.dirty)">
+                Name in alpha only
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="lastName">Last Name</label>
+            <input type="text" class="form-control" id="lastName" placeholder="Enter last name"
+                formControlName="lastName">
+            <div class="form-text text-danger"
+                *ngIf="Lastname.errors?.['required'] && (Lastname.touched  || Lastname.dirty)">
+                Last Name must be present
+            </div>
+
+            <div class="form-text text-danger"
+                *ngIf="Lastname.errors?.['minlength']  && (Lastname.touched  || Lastname.dirty)">
+                Invalid LastName
+            </div>
+
+            <div class="form-text text-danger"
+                *ngIf="Lastname.errors?.['pattern']  && (Lastname.touched  || Lastname.dirty)">
+                Name in alpha only
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="mobile">Mobile</label>
+            <input type="number" class="form-control" id="mobile" placeholder="+91" formControlName="mobile">
+            <div class="form-text text-danger" *ngIf="mobile.errors?.['required'] && (mobile.touched  || mobile.dirty)">
+                mobile must be present
+            </div>
+
+            <div class="form-text text-danger" *ngIf="mobile.errors?.['pattern']  && (mobile.touched  || mobile.dirty)">
+                Invalid mobile
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="city">City</label>
+            <input type="text" class="form-control" id="city" placeholder="Enter city" formControlName="City">
+            <div class="form-text text-danger" *ngIf="city.errors?.['required'] && (city.touched  || city.dirty)">
+                city must be present
+            </div>
+
+            <div class="form-text text-danger" *ngIf="city.errors?.['minlength']  && (city.touched  || city.dirty)">
+                Invalid city Name
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="Zip">Zip</label>
+            <input type="number" class="form-control" id="Zip" placeholder="Ex:11001" formControlName="Zip">
+            <div class="form-text text-danger" *ngIf="Zip.errors?.['required'] && (Zip.touched  || Zip.dirty)">
+                Zip must be present
+            </div>
+
+            <div class="form-text text-danger" *ngIf="Zip.errors?.['maxlength']  && (Zip.touched  || Zip.dirty)">
+                Only Indian Pincode are allowed
+            </div>
+        </div>
+        <div class="col-md-6">
+            <label for="age">Age</label>
+            <input type="number" class="form-control" id="age" placeholder="21" formControlName="age">
+            <div class="form-text text-danger" *ngIf="age.errors?.['required'] && (age.touched  || age.dirty)">
+                age must be present
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <label for="AppointmentStatus">Appointment Status</label>
+            <select class="form-control" id="AppointmentStatus" formControlName="AppointmentStatus">
+                <option value="" disabled>Select Appointment Status</option>
+                <option *ngFor="let status of Appointmentoptions" [value]="status">{{ status }}</option>
+            </select>
+            <div class="form-text text-danger"
+                *ngIf="AppointmentStatus.errors?.['required'] && (AppointmentStatus.touched || AppointmentStatus.dirty)">
+                Appointment status must be selected
+            </div>
+
+            <div class="row" *ngIf="isFixedAppointment()">
+                <div class="col-md-6">
+                    <label for="AppointmentNumber">Appointment Number</label>
+                    <input type="text" class="form-control" id="AppointmentNumber"
+                        placeholder="Enter appointment number" formControlName="AppointmentNumber">
+                </div>
+                <div class="form-text text-danger"
+                    *ngIf="AppointmentNumber.errors?.['required'] && (AppointmentNumber.touched || AppointmentNumber.dirty)">
+                    Appointment Number required
+                </div>
+            </div>
+            <div class="col-md-6">
+                <label for="dob">Date of Birth</label>
+                <input type="date" class="form-control" id="dob" formControlName="Dob">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <label for="maritalStatus">Marital Status</label>
+                <select class="form-control" id="maritalStatus" formControlName="Maritalstatus">
+                    <option value="" disabled>Select Marital Status</option>
+                    <option *ngFor="let status of maritaloptions" [value]="status">{{ status }}</option>
+                </select>
+                <div class="form-text text-danger"
+                    *ngIf="maritalStatus.errors?.['required'] && (maritalStatus.touched || maritalStatus.dirty)">
+                    Marital status must be selected
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6">
+                    <label>Gender</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="male" value="male"
+                            formControlName="Gender">
+                        <label class="form-check-label" for="male">Male</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="female" value="female"
+                            formControlName="Gender">
+                        <label class="form-check-label" for="female">Female</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="gender" id="other" value="other"
+                            formControlName="Gender">
+                        <label class="form-check-label" for="other">Other</label>
+                    </div>
+                    <div class="form-text text-danger" *ngIf="Gender.errors?.['required']">
+                        Select Gender
+                    </div>
+
+                </div>
+
+                
+                <div class="col-md-6">
+                    <label>Taking any medication</label>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="medication" id="true"
+                            [value]="true" formControlName="medication">
+                        <label class="form-check-label" for="true">True</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="medication" id="false"
+                            [value]="false" formControlName="medication">
+                        <label class="form-check-label" for="false">False</label>
+                    </div>
+                    <div class="form-text text-danger" *ngIf="medication.errors?.['required']">
+                        Select Past Medical History
+                    </div>
+
+                    <div class="row" *ngIf="medication.value === true">
+                        <div class="col-md-12">
+                            <label for="medication">Explain Here</label>
+                            <textarea class="form-control" id="medication"
+                                placeholder="Describe medication"
+                                formControlName="medicationExplanation"></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="weight">Weight</label>
+                        <input type="number" class="form-control" id="weight" placeholder="Enter weight (in kg)"
+                            formControlName="Weight">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label for="bloodGroup">Blood Group</label>
+                        <input type="text" class="form-control" id="bloodGroup" placeholder="Enter blood group"
+                            formControlName="BloodGroup">
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="allergicSalt">Allergic Salt</label>
+                            <input type="text" class="form-control" id="allergicSalt" placeholder="Enter allergic salt"
+                                formControlName="AllergicSalt">
+                        </div>
+
+                        <div class="col-md-6">
+                            <label>MedicalHistory</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="MedicalHistory" id="true"
+                                    [value]="true" formControlName="MedicalHistory">
+                                <label class="form-check-label" for="true">True</label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="MedicalHistory" id="false"
+                                    [value]="false" formControlName="MedicalHistory">
+                                <label class="form-check-label" for="false">False</label>
+                            </div>
+                            <div class="form-text text-danger" *ngIf="MedicalHistory.errors?.['required']">
+                                Select Past Medical History
+                            </div>
+
+                            <div class="row" *ngIf="MedicalHistory.value === true">
+                                <div class="col-md-12">
+                                    <label for="medicalHistory">Medical History Explanation</label>
+                                    <textarea class="form-control" id="medicalHistory"
+                                        placeholder="Explain your medical history"
+                                        formControlName="MedicalHistoryExplanation"></textarea>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 offset-md-3">
+                            <button type="submit" [disabled]="registerFrom.invalid"
+                                class="btn btn-primary btn-block">Submit</button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</form>
